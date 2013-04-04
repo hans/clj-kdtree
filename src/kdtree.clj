@@ -6,11 +6,12 @@
 (defrecord Node [left right #^doubles value #^long depth])
 (defrecord Result [point dist-squared])
 
+(defn- square [n]
+  (* n n))
+
 (defn- dist-squared [a b]
   "Compute the K-dimensional distance between two points"
-  (reduce + (for [i (range (count a))]
-              (let [v (- (nth a i) (nth b i))]
-                (* v v)))))
+  (reduce + (map (comp square -) a b)))
 
 (defn build-tree
   "Construct a Kd-tree from points. Assumes all
